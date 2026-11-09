@@ -1,0 +1,6 @@
+{
+  "name": "منصة IE التعليمية - لطلاب السنغال",
+  "description": "المنصة التعليمية المتخصصة لطلاب الجامع والمعاهد في السنغال لمواد اللغة العربية، التاريخ والجغرافيا بإشراف فضيلة الشيخ تيجان ا نداو.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
