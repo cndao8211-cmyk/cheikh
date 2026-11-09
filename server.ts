@@ -483,6 +483,102 @@ app.post('/api/store/order', (req, res) => {
   });
 });
 
+// 13. Direct Desktop Shortcut & Installer Downloads for PC, Mac, and Mobile
+app.get('/api/download/desktop-shortcut', (req, res) => {
+  const targetUrl = 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app';
+  const urlFileContent = `[InternetShortcut]\r\nURL=${targetUrl}\r\nIconIndex=0\r\nIconFile=${targetUrl}/pwa-192x192.png\r\n`;
+  res.setHeader('Content-Disposition', 'attachment; filename="IE_Academie_Senegal.url"');
+  res.setHeader('Content-Type', 'application/internet-shortcut');
+  return res.send(urlFileContent);
+});
+
+app.get('/api/download/desktop-installer-windows', (req, res) => {
+  const targetUrl = 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app';
+  const batContent = `@echo off
+chcp 65001 >nul
+title Installation de l'Application IE Academie Senegal
+echo ========================================================
+echo   IE Academie Professeur Ndao - Senegal
+echo   Apprendre - Reussir - Exceller
+echo ========================================================
+echo.
+echo   Creation du raccourci sur votre Bureau (Desktop)...
+powershell -Command "$desktop = [Environment]::GetFolderPath('Desktop'); $path = Join-Path $desktop 'IE Academie Professeur Ndao.url'; '[InternetShortcut]' | Out-File -FilePath $path -Encoding utf8; 'URL=${targetUrl}' | Out-File -FilePath $path -Append -Encoding utf8; 'IconIndex=0' | Out-File -FilePath $path -Append -Encoding utf8"
+echo.
+echo   [OK] L'application est maintenant installee sur votre Bureau!
+echo   Double-cliquez sur 'IE Academie Professeur Ndao' pour lancer l'application.
+echo.
+pause
+`;
+  res.setHeader('Content-Disposition', 'attachment; filename="Installer_IE_Academie_Windows.bat"');
+  res.setHeader('Content-Type', 'application/x-bat');
+  return res.send(batContent);
+});
+
+app.get('/api/download/desktop-mac-launcher', (req, res) => {
+  const targetUrl = 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app';
+  const cmdContent = `#!/bin/bash
+# Lanceur IE Academie pour macOS
+open "${targetUrl}"
+`;
+  res.setHeader('Content-Disposition', 'attachment; filename="Lancer_IE_Academie_Mac.command"');
+  res.setHeader('Content-Type', 'application/x-sh');
+  return res.send(cmdContent);
+});
+
+app.get('/api/download/desktop-linux-launcher', (req, res) => {
+  const targetUrl = 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app';
+  const desktopEntry = `[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IE Académie Professeur Ndao
+Comment=Plateforme éducative et holding IE Sénégal
+Exec=xdg-open ${targetUrl}
+Icon=applications-education
+Terminal=false
+Categories=Education;
+`;
+  res.setHeader('Content-Disposition', 'attachment; filename="IE_Academie_Senegal.desktop"');
+  res.setHeader('Content-Type', 'application/x-desktop');
+  return res.send(desktopEntry);
+});
+
+// 14. Download full application archive ZIP for local/offline execution on computer
+app.get('/api/download/desktop-app-zip', async (req, res) => {
+  try {
+    const { exec } = await import('child_process');
+    const zipPath = '/tmp/IE_Academie_App_PC.zip';
+    
+    // Create zip excluding heavy node_modules and cache
+    const zipCmd = `python3 -c "
+import zipfile, os
+zip_path = '${zipPath}'
+root_dir = '${__dirname}'
+exclude_dirs = {'node_modules', '.git', 'dist', '.cache'}
+with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+    for root, dirs, files in os.walk(root_dir):
+        dirs[:] = [d for d in dirs if d not in exclude_dirs]
+        for f in files:
+            if f.endswith('.zip'): continue
+            full_path = os.path.join(root, f)
+            rel_path = os.path.relpath(full_path, root_dir)
+            zipf.write(full_path, rel_path)
+"`;
+    
+    exec(zipCmd, (error) => {
+      if (error) {
+        console.error('Error creating zip:', error);
+        return res.status(500).json({ error: 'Erreur lors de la préparation du fichier ZIP.' });
+      }
+      res.download(zipPath, 'IE_Academie_Application_Complete.zip');
+    });
+  } catch (err: any) {
+    console.error('Zip generation error:', err);
+    res.status(500).json({ error: 'Erreur serveur.' });
+  }
+});
+
+
 // Setup Vite middleware in dev or static files in production
 async function startServer() {
   if (process.env.NODE_ENV === 'production') {

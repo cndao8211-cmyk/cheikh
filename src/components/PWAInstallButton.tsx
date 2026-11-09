@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Download, Smartphone, CheckCircle2, X, Share2, PlusSquare, ArrowDown, Sparkles, ExternalLink, AlertTriangle } from 'lucide-react';
 import { usePWAInstall } from '../services/usePWAInstall';
 
+export const openPWAInstallModal = () => {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('open_pwa_install_guide'));
+  }
+};
+
 export const PWAInstallButton: React.FC<{ variant?: 'header' | 'banner' | 'card' }> = ({
   variant = 'header',
 }) => {
@@ -9,10 +15,34 @@ export const PWAInstallButton: React.FC<{ variant?: 'header' | 'banner' | 'card'
   const [showInstallGuide, setShowInstallGuide] = useState<boolean>(false);
   const [installSuccess, setInstallSuccess] = useState<boolean>(false);
 
+  React.useEffect(() => {
+    const handleOpen = () => setShowInstallGuide(true);
+    window.addEventListener('open_pwa_install_guide', handleOpen);
+    return () => window.removeEventListener('open_pwa_install_guide', handleOpen);
+  }, []);
+
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const appUrl = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
     ? 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app'
     : (typeof window !== 'undefined' ? window.location.origin : 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app');
+
+  const [downloadSuccessToast, setDownloadSuccessToast] = useState<string | null>(null);
+
+  const downloadDesktopShortcut = () => {
+    const targetUrl = 'https://ais-pre-svdpu537ry36nuixdlg37q-516346972590.europe-west2.run.app';
+    const content = `[InternetShortcut]\r\nURL=${targetUrl}\r\nIconIndex=0\r\nIconFile=${targetUrl}/pwa-192x192.png\r\n`;
+    const blob = new Blob([content], { type: 'application/internet-shortcut;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'منصة_IE_التعليمية_السنغال.url';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setDownloadSuccessToast('تم تنزيل ملف اختصار منصة IE بنجاح إلى حاسوبك في مجلد التنزيلات (Téléchargements)! يمكنك سحبه إلى سطح المكتب (Bureau) لفتحه مباشرة.');
+    setTimeout(() => setDownloadSuccessToast(null), 8000);
+  };
 
   const copyAppUrl = () => {
     navigator.clipboard.writeText(appUrl);
@@ -49,14 +79,21 @@ export const PWAInstallButton: React.FC<{ variant?: 'header' | 'banner' | 'card'
 
   return (
     <>
+      {downloadSuccessToast && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl bg-emerald-800 text-white shadow-2xl flex items-center gap-2.5 text-xs sm:text-sm font-bold border border-emerald-400">
+          <CheckCircle2 className="w-5 h-5 text-emerald-200 shrink-0" />
+          <span>{downloadSuccessToast}</span>
+        </div>
+      )}
+
       {variant === 'header' && (
         <button
           onClick={handleInstallClick}
-          className="px-3.5 py-1.5 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-lg shadow-sm transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5"
-          title="تثبيت التطبيق على الحاسوب أو الهاتف (Installer sur Ordinateur / Téléphone)"
+          className="px-3.5 py-1.5 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-lg shadow-sm transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
+          title="تثبيت التطبيق على الحاسوب أو الهاتف (Installer sur Ordinateur / PC / Téléphone)"
         >
           <Download className="w-3.5 h-3.5 text-amber-300" />
-          <span>تثبيت التطبيق (Installer)</span>
+          <span>تثبيت على الكمبيوتر (Installer PC)</span>
         </button>
       )}
 
@@ -84,15 +121,23 @@ export const PWAInstallButton: React.FC<{ variant?: 'header' | 'banner' | 'card'
 
           <div className="flex flex-wrap items-center gap-2 shrink-0">
             <button
+              onClick={downloadDesktopShortcut}
+              className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+              title="تنزيل ملف اختصار سطح المكتب مباشرة"
+            >
+              <Download className="w-4 h-4 text-amber-300" />
+              <span>تنزيل ملف البرنامج للسطح فوراً (.url)</span>
+            </button>
+            <button
               onClick={handleInstallClick}
-              className="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-black text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-black text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
             >
               <Download className="w-4 h-4 text-stone-950" />
-              <span>تثبيت على الحاسوب أو الهاتف (Installer)</span>
+              <span>تثبيت عبر المتصفح (Installer)</span>
             </button>
             <button
               onClick={() => setShowInstallGuide(true)}
-              className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all flex items-center gap-1.5"
+              className="px-3 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all flex items-center gap-1.5"
             >
               <span>دليل التثبيت والرابط</span>
             </button>
@@ -151,6 +196,116 @@ export const PWAInstallButton: React.FC<{ variant?: 'header' | 'banner' | 'card'
                 </div>
               </div>
             )}
+
+            {/* Toast feedback */}
+            {downloadSuccessToast && (
+              <div className="p-3.5 rounded-2xl bg-emerald-700 text-white text-xs font-bold shadow-lg flex items-center gap-2.5">
+                <CheckCircle2 className="w-5 h-5 text-emerald-200 shrink-0" />
+                <span>{downloadSuccessToast}</span>
+              </div>
+            )}
+
+            {/* Direct Instant Download of Desktop Shortcut Box (Bilingual FR / AR) */}
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-emerald-900 via-stone-900 to-stone-900 text-white border-2 border-emerald-400 shadow-xl space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-600/80 border border-emerald-400 flex items-center justify-center font-bold shrink-0">
+                  <Download className="w-6 h-6 text-amber-300" />
+                </div>
+                <div className="text-right">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-400 text-stone-950">
+                      Télécharger sur Ordinateur
+                    </span>
+                    <span className="text-[10px] text-emerald-300">Windows · Mac · Linux</span>
+                  </div>
+                  <h4 className="font-extrabold text-base text-white mt-1">
+                    تحميل وتثبيت التطبيق على جهاز الكمبيوتر الخاص بك
+                  </h4>
+                  <p className="text-xs text-stone-300">
+                    Téléchargez et installez l'application complète sur votre PC / Mac pour un accès direct depuis votre Bureau.
+                  </p>
+                </div>
+              </div>
+
+              {/* Download Buttons Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                {/* Windows 1-Click .bat */}
+                <a
+                  href="/api/download/desktop-installer-windows"
+                  download="Installer_IE_Academie_Windows.bat"
+                  onClick={() => {
+                    setDownloadSuccessToast('Téléchargement du script d\'installation Windows en cours ! Double-cliquez dessus dans vos Téléchargements.');
+                    setTimeout(() => setDownloadSuccessToast(null), 8000);
+                  }}
+                  className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-between shadow-md transition-colors cursor-pointer border border-emerald-400/50"
+                >
+                  <div className="flex items-center gap-2 text-right">
+                    <Download className="w-4 h-4 text-amber-300 shrink-0" />
+                    <div>
+                      <div className="font-extrabold">Windows (.bat automatique)</div>
+                      <div className="text-[10px] text-emerald-100">Crée l'icône sur le Bureau en 1 clic</div>
+                    </div>
+                  </div>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-black/20 rounded font-mono">PC</span>
+                </a>
+
+                {/* Desktop Shortcut .url */}
+                <button
+                  type="button"
+                  onClick={downloadDesktopShortcut}
+                  className="p-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-bold text-xs flex items-center justify-between shadow-md transition-colors cursor-pointer border border-stone-600"
+                >
+                  <div className="flex items-center gap-2 text-right">
+                    <Download className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div>
+                      <div className="font-extrabold">Raccourci Bureau (.url)</div>
+                      <div className="text-[10px] text-stone-300">Fichier de lancement rapide</div>
+                    </div>
+                  </div>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-black/30 rounded font-mono">Direct</span>
+                </button>
+
+                {/* Mac Launcher */}
+                <a
+                  href="/api/download/desktop-mac-launcher"
+                  download="Lancer_IE_Academie_Mac.command"
+                  onClick={() => {
+                    setDownloadSuccessToast('Lanceur macOS téléchargé !');
+                    setTimeout(() => setDownloadSuccessToast(null), 6000);
+                  }}
+                  className="p-3 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-bold text-xs flex items-center justify-between shadow-md transition-colors cursor-pointer border border-stone-600"
+                >
+                  <div className="flex items-center gap-2 text-right">
+                    <Download className="w-4 h-4 text-sky-400 shrink-0" />
+                    <div>
+                      <div className="font-extrabold">Apple Mac (macOS .command)</div>
+                      <div className="text-[10px] text-stone-300">Lanceur dédié MacBook & iMac</div>
+                    </div>
+                  </div>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-black/30 rounded font-mono">Mac</span>
+                </a>
+
+                {/* Complete ZIP Archive for Offline / Local Execution */}
+                <a
+                  href="/api/download/desktop-app-zip"
+                  download="IE_Academie_Application_Complete.zip"
+                  onClick={() => {
+                    setDownloadSuccessToast('Téléchargement du dossier complet de l\'application (ZIP) démarré !');
+                    setTimeout(() => setDownloadSuccessToast(null), 8000);
+                  }}
+                  className="p-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-stone-950 font-black text-xs flex items-center justify-between shadow-md transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2 text-right">
+                    <Download className="w-4 h-4 text-stone-950 shrink-0" />
+                    <div>
+                      <div className="font-black">Application Complète (ZIP)</div>
+                      <div className="text-[10px] text-stone-800">Code et ressources pour votre PC</div>
+                    </div>
+                  </div>
+                  <span className="text-[10px] px-1.5 py-0.5 bg-black/15 rounded font-mono">Archive</span>
+                </a>
+              </div>
+            </div>
 
             {/* Direct Link Copier Box */}
             <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 space-y-2">

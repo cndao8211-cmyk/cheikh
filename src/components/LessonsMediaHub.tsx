@@ -586,17 +586,40 @@ export const LessonsMediaHub: React.FC<LessonsMediaHubProps> = ({ onAskTutor }) 
                           <p className="text-xs text-stone-500">{vid.description}</p>
 
                           {/* Video Player Shell */}
-                          <div className="relative rounded-2xl overflow-hidden bg-black aspect-video border border-stone-800 flex items-center justify-center group">
-                            {vid.url.includes('youtube.com') || vid.url.includes('youtu.be') ? (
-                              <iframe
-                                src={vid.url}
-                                title={vid.title}
-                                className="w-full h-full border-0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen
-                              />
+                          <div className="relative rounded-2xl overflow-hidden bg-black border border-stone-800 flex items-center justify-center group">
+                            {vid.url.endsWith('.mp4') || vid.url.startsWith('/assets/') ? (
+                              <div className="w-full flex flex-col items-center bg-black p-2">
+                                <video
+                                  src={vid.url}
+                                  controls
+                                  playsInline
+                                  preload="metadata"
+                                  className="w-full max-h-[60vh] object-contain rounded-xl bg-black"
+                                />
+                                <div className="w-full flex items-center justify-between text-[11px] text-stone-400 pt-2 px-2">
+                                  <span className="font-bold text-emerald-400">فيديو رسمي للأستاذ نداو</span>
+                                  <a
+                                    href={vid.url}
+                                    download
+                                    className="text-stone-300 hover:text-white underline flex items-center gap-1"
+                                  >
+                                    <Download className="w-3 h-3 text-emerald-400" />
+                                    <span>تحميل المقطع (MP4)</span>
+                                  </a>
+                                </div>
+                              </div>
+                            ) : vid.url.includes('youtube.com') || vid.url.includes('youtu.be') ? (
+                              <div className="w-full aspect-video">
+                                <iframe
+                                  src={vid.url}
+                                  title={vid.title}
+                                  className="w-full h-full border-0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                              </div>
                             ) : (
-                              <div className="text-center p-6 space-y-3 text-white">
+                              <div className="text-center p-6 space-y-3 text-white aspect-video flex flex-col items-center justify-center">
                                 <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                                   <Play className="w-8 h-8 text-amber-400 fill-amber-400" />
                                 </div>
@@ -608,7 +631,7 @@ export const LessonsMediaHub: React.FC<LessonsMediaHubProps> = ({ onAskTutor }) 
                                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold"
                                 >
                                   <ExternalLink className="w-3.5 h-3.5" />
-                                  <span>فتح المحاضرة في نافذة مستقلة</span>
+                                  <span>فتح المقطع في نافذة مستقلة</span>
                                 </a>
                               </div>
                             )}

@@ -3,7 +3,7 @@ import { CURRICULUM_LESSONS } from '../data/senegalCurriculum';
 
 const CUSTOM_LESSONS_STORAGE_KEY = 'ie_custom_lessons_v1';
 
-// Seed default media for existing curriculum lessons
+// Seed default media for existing curriculum lessons with official Cheikh Tidiane Ndao videos
 const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
   if (lesson.id === 'arabic-grammar-1') {
     return {
@@ -12,10 +12,10 @@ const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
         videos: [
           {
             id: 'v-ar-1',
-            title: 'شرح تفاعلي: كان وأخواتها وإنّ وأخواتها مع إعراب الشواهد',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // standard embed or resource
-            duration: '18:45',
-            description: 'محاضرة مرئية تشرح الفروق الإعرابية وشواهد دواوين شعراء السنغال مع فضيلة الشيخ تيجان ا نداو.',
+            title: 'فيديو أكاديمية IE: دروس النحو والصرف وتحليل النصوص مع الأستاذ نداو',
+            url: '/assets/aistudio/Create_promotional_video_for_aca__df7acecd_e295e845.mp4',
+            duration: '0:08',
+            description: 'المقطع المرئي الرسمي للأستاذ الشيخ تيجان ا نداو: شرح النواسخ والإعراب وقواعد النحو لطلاب السنغال. واتساب: 787130061.',
           },
         ],
         pdfFiles: [
@@ -46,10 +46,10 @@ const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
         videos: [
           {
             id: 'v-ar-2',
-            title: 'قراءة وتحليل في قصائد الشيخ أحمدو بمب والحاج مالك سي',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            duration: '22:10',
-            description: 'تحليل بلاغي لقصائد المديح النبوي وشواهد البلاغة في الشعر السنغالي العربي.',
+            title: 'فيديو أكاديمية IE: تحليل النصوص والبلاغة والأدب مع الأستاذ نداو',
+            url: '/assets/aistudio/Create_promotional_video_for_aca__737a80ba_c0761c59.mp4',
+            duration: '0:08',
+            description: 'تحليل بلاغي ومنهجي لنصوص الأدب والشعر العربي لطلاب الشهادة الثانوية والمعاهد.',
           },
         ],
         pdfFiles: [
@@ -80,10 +80,10 @@ const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
         videos: [
           {
             id: 'v-hi-1',
-            title: 'وثائقي تاريخي: حضارة مملكة تكرور وإمبراطورية جولوف الكبرى',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            duration: '25:30',
-            description: 'عرض تاريخي مصور لمسار دولة وارجابي بن رابيس وعاصمة جولوف يانغ-يانغ.',
+            title: 'فيديو أكاديمية IE: مقررات التاريخ والجغرافيا مع الأستاذ نداو',
+            url: '/assets/aistudio/Animate_educational_recruitment___8518f167_860aa8b8.mp4',
+            duration: '0:08',
+            description: 'عرض ومراجعة تاريخية لمقررات السنغال وممالك تكرور وجولوف لطلاب المعاهد والجامع.',
           },
         ],
         pdfFiles: [
@@ -114,10 +114,10 @@ const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
         videos: [
           {
             id: 'v-hi-2',
-            title: 'سيرة البطل الوطني لط ديور والمقاومة في كايور وسالوم',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            duration: '19:40',
-            description: 'شرح شامل لمعارك المقاومة الوطنية والروحية ضد المستعمر.',
+            title: 'فيديو أكاديمية IE: المنهجية ونماذج الامتحانات في التاريخ',
+            url: '/assets/aistudio/Create_promotional_video_for_aca__df7acecd_e295e845.mp4',
+            duration: '0:08',
+            description: 'منهجية الإجابة على الأسئلة المقالية في مادة تاريخ السنغال بإشراف الأستاذ نداو.',
           },
         ],
         pdfFiles: [
@@ -148,10 +148,10 @@ const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
         videos: [
           {
             id: 'v-geo-1',
-            title: 'استكشاف أقاليم السنغال الـ 14: المناخ والتضاريس والسكان',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            duration: '21:15',
-            description: 'جولة جغرافية مصورة تشرح الفروق المناخية بين الساحل وحوض النهر وكازامانس.',
+            title: 'فيديو أكاديمية IE: جغرافيا وتنمية أقاليم السنغال الـ 14',
+            url: '/assets/aistudio/Create_promotional_video_for_aca__737a80ba_c0761c59.mp4',
+            duration: '0:08',
+            description: 'شرح تحليلي لجغرافيا السنغال والأقاليم الـ 14 والسدود والموارد الاقتصادية.',
           },
         ],
         pdfFiles: [
@@ -182,10 +182,10 @@ const ENRICHED_DEFAULT_LESSONS: Lesson[] = CURRICULUM_LESSONS.map((lesson) => {
         videos: [
           {
             id: 'v-geo-2',
-            title: 'الاقتصاد السنغالي الحديث: الفول السوداني، الصيد، وحقول الغاز الكبرى',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            duration: '24:00',
-            description: 'دراسة تحليلية للموارد الاقتصادية السنغالية وآفاق التنمية المستقبلية.',
+            title: 'فيديو أكاديمية IE: اقتصاد وموارد السنغال واستراتيجيات التنمية',
+            url: '/assets/aistudio/Animate_educational_recruitment___8518f167_860aa8b8.mp4',
+            duration: '0:08',
+            description: 'دراسة تحليلية للموارد الاقتصادية السنغالية وآفاق التنمية مع الأستاذ نداو.',
           },
         ],
         pdfFiles: [

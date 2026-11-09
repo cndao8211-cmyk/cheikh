@@ -436,11 +436,21 @@ export const CheikhLecturesAndPapersHub: React.FC<CheikhLecturesAndPapersHubProp
                 >
                   {/* Video Media Banner Card with Cheikh's Portrait & Play Reel */}
                   <div className="relative aspect-video w-full bg-stone-950 overflow-hidden cursor-pointer" onClick={() => setSelectedVideo(video)}>
-                    <img
-                      src={video.thumbnailUrl}
-                      alt={video.title}
-                      className="w-full h-full object-cover object-top opacity-85 group-hover:scale-105 group-hover:opacity-95 transition-all duration-500"
-                    />
+                    {video.videoUrl.endsWith('.mp4') || video.videoUrl.startsWith('/assets/') ? (
+                      <video
+                        src={video.videoUrl}
+                        preload="metadata"
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 opacity-90"
+                      />
+                    ) : (
+                      <img
+                        src={video.thumbnailUrl}
+                        alt={video.title}
+                        className="w-full h-full object-cover object-top opacity-85 group-hover:scale-105 group-hover:opacity-95 transition-all duration-500"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent" />
                     
                     {/* Play Button Overlay */}
@@ -696,20 +706,53 @@ export const CheikhLecturesAndPapersHub: React.FC<CheikhLecturesAndPapersHubProp
               </button>
             </div>
 
-            {/* Video Screen */}
-            <div className="relative aspect-video w-full bg-black">
-              {selectedVideo.videoUrl.includes('youtube') ? (
-                <iframe
-                  src={selectedVideo.videoUrl}
-                  title={selectedVideo.title}
-                  className="w-full h-full border-0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+            {/* Video Screen & Responsive Theater Player */}
+            <div className="relative w-full bg-black flex items-center justify-center min-h-[360px] sm:min-h-[460px] p-2 sm:p-4">
+              {selectedVideo.videoUrl.endsWith('.mp4') || selectedVideo.videoUrl.startsWith('/assets/') ? (
+                <div className="w-full flex flex-col items-center justify-center space-y-3">
+                  <div className="relative max-w-sm sm:max-w-md w-full rounded-2xl overflow-hidden shadow-2xl border border-stone-800 bg-stone-950">
+                    <video
+                      key={selectedVideo.videoUrl}
+                      src={selectedVideo.videoUrl}
+                      controls
+                      autoPlay
+                      playsInline
+                      loop
+                      className="w-full h-auto max-h-[65vh] object-contain mx-auto"
+                    />
+                  </div>
+
+                  {/* Player Quick Bar */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 w-full max-w-sm sm:max-w-md px-1 text-xs text-stone-300">
+                    <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                      <Sparkles className="w-4 h-4 text-emerald-400" />
+                      <span>مقطع فيديو حصري للأستاذ نداو (IE Académie)</span>
+                    </span>
+
+                    <a
+                      href={selectedVideo.videoUrl}
+                      download={`IE_Academie_${selectedVideo.id}.mp4`}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-bold transition-colors cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5 text-amber-300" />
+                      <span>تحميل الفيديو (MP4)</span>
+                    </a>
+                  </div>
+                </div>
+              ) : selectedVideo.videoUrl.includes('youtube') ? (
+                <div className="w-full aspect-video">
+                  <iframe
+                    src={selectedVideo.videoUrl}
+                    title={selectedVideo.title}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
               ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center bg-stone-950 p-6 text-center space-y-3">
-                  <Play className="w-12 h-12 text-emerald-500" />
-                  <p className="text-xs text-stone-300">جاري تشغيل الشرح المرئي للشيخ تيجان ا نداو...</p>
+                <div className="w-full h-full flex flex-col items-center justify-center bg-stone-950 p-8 text-center space-y-3">
+                  <Play className="w-12 h-12 text-emerald-500 animate-pulse" />
+                  <p className="text-xs text-stone-300">جاري عرض الفيديو الرسمي للأستاذ الشيخ تيجان ا نداو...</p>
                 </div>
               )}
             </div>
@@ -744,6 +787,27 @@ export const CheikhLecturesAndPapersHub: React.FC<CheikhLecturesAndPapersHubProp
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Direct WhatsApp Call-To-Action as shown in Professeur Ndao's video */}
+              <div className="p-4 rounded-2xl bg-emerald-950/80 border border-emerald-500/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-white">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                    <span className="text-xs font-black text-amber-300">التسجيل والتواصل المباشر مع الأستاذ نداو:</span>
+                  </div>
+                  <p className="text-[11px] text-stone-200">
+                    رقم الواتساب الرسمي المذكور في الفيديو: <strong>78 713 00 61 (+221)</strong>
+                  </p>
+                </div>
+                <a
+                  href={`https://wa.me/221787130061?text=${encodeURIComponent(`السلام عليكم أستاذ الشيخ تيجان ا نداو، أود التسجيل والانضمام إلى دورات أكاديمية IE بعد مشاهدة الفيديو: ${selectedVideo.title}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md shrink-0"
+                >
+                  <span>مراسلة واتساب الآن 787130061</span>
+                </a>
               </div>
 
               {/* Bottom Tutor Prompt */}

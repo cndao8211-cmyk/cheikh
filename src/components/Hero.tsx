@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, BookOpen, Compass, Globe2, Sparkles, Award, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, Compass, Globe2, Sparkles, Award, CheckCircle2, Download } from 'lucide-react';
 
 interface HeroProps {
   onSelectSubject: (tab: string) => void;
@@ -53,26 +53,41 @@ export const Hero: React.FC<HeroProps> = ({ onSelectSubject, onOpenTutor, onOpen
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={() => onSelectSubject('lectures')}
-                className="px-5 py-3 text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-lg shadow-sm transition-all flex items-center gap-2 whitespace-nowrap shrink-0"
+                className="px-5 py-3 text-sm font-semibold text-white bg-emerald-700 hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 rounded-xl shadow-sm transition-all flex items-center gap-2 whitespace-nowrap shrink-0"
               >
-                <BookOpen className="w-4 h-4" />
-                <span>قاعة شروحات الشيخ وأوراق PDF (فيديوهات ومذكرات)</span>
+                <BookOpen className="w-4 h-4 text-emerald-200" />
+                <span>قاعة فيديوهات الشيخ وأوراق PDF (الشروحات الرسمية)</span>
               </button>
+
+              <button
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('open_pwa_install_guide'));
+                  }
+                }}
+                className="px-5 py-3 text-sm font-bold text-stone-900 bg-amber-400 hover:bg-amber-300 rounded-xl shadow-md transition-all flex items-center gap-2 whitespace-nowrap shrink-0 cursor-pointer"
+                title="Télécharger et installer l'application sur votre ordinateur"
+              >
+                <Download className="w-4 h-4 text-stone-950" />
+                <span>تحميل وتثبيت على الكمبيوتر (Installer PC)</span>
+              </button>
+
               {onOpenPayment && (
                 <button
                   onClick={onOpenPayment}
-                  className="px-5 py-3 text-sm font-semibold text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-sm transition-all flex items-center gap-2 whitespace-nowrap shrink-0"
+                  className="px-5 py-3 text-sm font-semibold text-white bg-stone-800 hover:bg-stone-700 rounded-xl shadow-sm transition-all flex items-center gap-2 whitespace-nowrap shrink-0 border border-stone-700"
                 >
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>تأكيد الدفع وتفعيل الاشتراك (5,000 FCFA فقط)</span>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>تأكيد الاشتراك (Wave & Orange Money)</span>
                 </button>
               )}
+
               <button
                 onClick={onOpenTutor}
-                className="px-5 py-3 text-sm font-semibold text-stone-800 dark:text-stone-200 bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-700 rounded-lg shadow-xs transition-all flex items-center gap-2 whitespace-nowrap shrink-0"
+                className="px-5 py-3 text-sm font-semibold text-stone-800 dark:text-stone-200 bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-700 rounded-xl shadow-xs transition-all flex items-center gap-2 whitespace-nowrap shrink-0"
               >
                 <Sparkles className="w-4 h-4 text-amber-500" />
-                استشارة مرشد الشيخ تيجان الذكي
+                استشارة المرشد الذكي
               </button>
             </div>
           </div>

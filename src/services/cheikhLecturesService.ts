@@ -32,98 +32,76 @@ export interface CheikhPdfPaper {
   dateAdded: string;
 }
 
-const STORAGE_VIDEOS_KEY = 'ie_cheikh_videos_v1';
+const STORAGE_VIDEOS_KEY = 'ie_cheikh_videos_v3_official';
 const STORAGE_PDFS_KEY = 'ie_cheikh_pdfs_v1';
 
-// Seed default video lectures of Cheikh Tidiane Ndao
+// Official video lectures and promotional videos of Cheikh Tidiane Ndao (IE Académie)
 export const DEFAULT_CHEIKH_VIDEOS: CheikhVideoLecture[] = [
   {
-    id: 'vid-ch-1',
-    title: 'درس مرئي: شرح الآجرومية وباب النواسخ (كان وأخواتها وإن وأخواتها)',
+    id: 'vid-ch-official-promo',
+    title: 'الفيديو التعريفي الرسمي: أكاديمية IE - الأستاذ نداو (Apprendre · Réussir · Exceller)',
     subject: 'arabic',
-    subjectTitle: 'اللغة العربية وآدابها',
-    duration: '24:15',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    description: 'شرح منهجي مفصل لقواعد الإعراب، والنواسخ، مع نماذج إعرابية تطبيقية لطلاب البكالوريا والمعاهد بالسنغال.',
-    teacherName: 'فضيلة الشيخ تيجان ا نداو',
-    teacherTitle: 'المؤسس والمشرف العلمي العام',
+    subjectTitle: 'أكاديمية IE - الأستاذ الشيخ تيجان ا نداو',
+    duration: '0:08',
+    videoUrl: '/assets/aistudio/Create_promotional_video_for_aca__df7acecd_e295e845.mp4',
+    description: 'المقطع المرئي الرسمي للأستاذ الشيخ تيجان ا نداو: تقديم مواد الأكاديمية (Histoire, Géographie, Nahu & Sarf, Analyse du texte, Analyse du cours, Méthodologie & Conseils). تواصلوا معنا: 787130061.',
+    teacherName: 'الأستاذ الشيخ تيجان ا نداو (Professeur Ndao)',
+    teacherTitle: 'المؤسس والمشرف العام - IE Académie',
     thumbnailUrl: '/assets/aistudio/file_00000000f46071f5830b0339c53ac6d7_2f20e753.png',
     keyPoints: [
-      'التمييز الدقيق بين عمل كان وأخواتها وإن وأخواتها',
-      'إعراب الشواهد القرآنية والشعرية السنغالية',
-      'الأخطاء الشائعة في إعراب أسماء النواسخ في امتحان البكالوريا',
-      'تطبيقات عملية من متن الآجرومية'
+      'شعار الأكاديمية: Apprendre · Réussir · Exceller (التعلم، النجاح، التفوق)',
+      'المقررات: التاريخ، الجغرافيا، لغة النحو والصرف، تحليل النصوص والدروس، المنهجية والنصائح',
+      'دروس كاملة ومراجعات فعالة وتأطير شخصي لطلاب جامعة UCAB توبا والسنغال',
+      'للتسجيل والتواصل المباشر عبر واتساب: 787130061 (Rejoignez-nous dès à présent!)'
     ],
-    viewsCount: 1420,
-    dateAdded: '2026-11-01',
+    viewsCount: 3840,
+    dateAdded: '2026-11-09',
     hasPdfNotes: true,
     linkedPdfId: 'pdf-ch-1'
   },
   {
-    id: 'vid-ch-2',
-    title: 'درس مرئي: تاريخ ممالك السنغال (حضارة تكرور وإمبراطورية جولوف الكبرى)',
+    id: 'vid-ch-recruitment-call',
+    title: 'فيديو التسجيل والالتحاق: دورات البكالوريا والمعاهد (Jang ak Réussir ci IE Académie)',
     subject: 'history',
-    subjectTitle: 'تاريخ السنغال وغرب إفريقيا',
-    duration: '28:40',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    description: 'استعراض تاريخي بالخرائط لمسار مملكة تكرور ودخول الإسلام مع وارجابي بن رابيس سنة 1040م وتوسع دولة جولوف.',
-    teacherName: 'فضيلة الشيخ تيجان ا نداو',
-    teacherTitle: 'المؤسس والمشرف العلمي العام',
+    subjectTitle: 'التسجيل والتوجيه الأكاديمي',
+    duration: '0:08',
+    videoUrl: '/assets/aistudio/Animate_educational_recruitment___8518f167_860aa8b8.mp4',
+    description: 'نداء الالتحاق المباشر ببرامج الأستاذ نداو لدراسة التاريخ والجغرافيا وقواعد النحو والصرف والاستعداد التام للامتحانات الرسمية.',
+    teacherName: 'الأستاذ الشيخ تيجان ا نداو (Professeur Ndao)',
+    teacherTitle: 'المؤسس والمشرف العام - IE Académie',
     thumbnailUrl: '/assets/aistudio/file_00000000f46071f5830b0339c53ac6d7_2f20e753.png',
     keyPoints: [
-      'نشأة تكرور في حوض نهر السنغال وأهميتها التجارية',
-      'دور الإسلام كعامل وحدة سياسية واجتماعية',
-      'انفصال الممالك: كايور، باوول، سين، وسالوم',
-      'أهم الأسئلة المقالية التاريخية المتكررة في البكالوريا'
+      'برنامج Jang Histoire, Géographie ak Nahwu Sarf, ba tax ngay réussir',
+      'تغطية شاملة ومبسطة لطلاب الجامع والمعاهد والشهادة الثانوية',
+      'أساليب تدريس متطورة وشروحات عملية ونماذج امتحانات سابقة',
+      'اتصلوا بنا فوراً (Wotel léegi): واتساب وهاتف 787130061'
     ],
-    viewsCount: 1890,
-    dateAdded: '2026-10-25',
+    viewsCount: 2950,
+    dateAdded: '2026-11-09',
     hasPdfNotes: true,
     linkedPdfId: 'pdf-ch-2'
   },
   {
-    id: 'vid-ch-3',
-    title: 'درس مرئي: الجغرافيا التنموية وأقاليم السنغال الـ 14 والموارد الاقتصادية',
+    id: 'vid-ch-methods-success',
+    title: 'فيديو المنهجية وتحليل النصوص: أسرار التفوق بمرتبة الشرف (Méthodologie & Conseils)',
     subject: 'geography',
-    subjectTitle: 'الجغرافيا والتنمية السنغالية',
-    duration: '21:50',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    description: 'شرح تحليلي لتقسيم السنغال الإقليمي، حوض النهر، زراعة الفول السوداني، واكتشافات النفط والغاز في سان لويس وسانغامار.',
-    teacherName: 'فضيلة الشيخ تيجان ا نداو',
-    teacherTitle: 'المؤسس والمشرف العلمي العام',
+    subjectTitle: 'المنهجية وتحليل النصوص',
+    duration: '0:08',
+    videoUrl: '/assets/aistudio/Create_promotional_video_for_aca__737a80ba_c0761c59.mp4',
+    description: 'إرشادات منهجية دقيقة لتحليل نصوص وموضوعات التاريخ والجغرافيا والنحو والصرف من الأستاذ نداو لضمان الدرجات الكاملة.',
+    teacherName: 'الأستاذ الشيخ تيجان ا نداو (Professeur Ndao)',
+    teacherTitle: 'المؤسس والمشرف العام - IE Académie',
     thumbnailUrl: '/assets/aistudio/file_00000000f46071f5830b0339c53ac6d7_2f20e753.png',
     keyPoints: [
-      'التقسيم الإداري والمناخي للأقاليم الـ 14',
-      'حوض نهر السنغال والسدود الكبرى (دياما ومننتالي)',
-      'تحديات التنمية الحضرية في إقليم داكار',
-      'قطاعات المستقبل: الغاز الطبيعي والطاقة المتجددة'
+      'خطوات تحليل النصوص (Analyse du texte) وتحليل الدروس (Analyse du cours)',
+      'تجنب الأخطاء الشائعة في إعراب النحو والصرف والمقالات الجغرافية',
+      'نصائح ذهبية للحصول على التقدير والامتياز في الامتحانات',
+      'خدمة الدعم والاستفسار المستمر عبر رقم الواتساب: 787130061'
     ],
-    viewsCount: 1150,
-    dateAdded: '2026-11-04',
+    viewsCount: 3120,
+    dateAdded: '2026-11-09',
     hasPdfNotes: true,
     linkedPdfId: 'pdf-ch-3'
-  },
-  {
-    id: 'vid-ch-4',
-    title: 'درس مرئي: البلاغة النبوية في دواوين شعراء السنغال (الشيخ بمب والحاج مالك)',
-    subject: 'arabic',
-    subjectTitle: 'اللغة العربية وآدابها',
-    duration: '26:15',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    description: 'قراءة نقدية وبلاغية في الاستعارات والجناس والطباق في قصائد مديح المصطفى ﷺ لشعراء السنغال الكبار.',
-    teacherName: 'فضيلة الشيخ تيجان ا نداو',
-    teacherTitle: 'المؤسس والمشرف العلمي العام',
-    thumbnailUrl: '/assets/aistudio/file_00000000f46071f5830b0339c53ac6d7_2f20e753.png',
-    keyPoints: [
-      'الخصائص البلاغية والأسلوبية لشعر الشيخ أحمدو بمب الخديم',
-      'شعر الحاج مالك سي ونفحات المديح والتربية الروحية',
-      'نماذج تحليل النصوص لطلاب الشهادة الثانوية العربية',
-      'كيف تجيب على سؤال التحليل الأدبي بدرجة كاملة'
-    ],
-    viewsCount: 2040,
-    dateAdded: '2026-10-18',
-    hasPdfNotes: true,
-    linkedPdfId: 'pdf-ch-4'
   }
 ];
 
@@ -214,10 +192,32 @@ export const DEFAULT_CHEIKH_PDFS: CheikhPdfPaper[] = [
 export const getCheikhVideos = (): CheikhVideoLecture[] => {
   if (typeof window === 'undefined') return DEFAULT_CHEIKH_VIDEOS;
   try {
+    // Clear old legacy key if present
+    localStorage.removeItem('ie_cheikh_videos_v1');
+    localStorage.removeItem('ie_cheikh_videos_v2');
+
     const raw = localStorage.getItem(STORAGE_VIDEOS_KEY);
-    if (!raw) return DEFAULT_CHEIKH_VIDEOS;
+    if (!raw) {
+      saveCheikhVideos(DEFAULT_CHEIKH_VIDEOS);
+      return DEFAULT_CHEIKH_VIDEOS;
+    }
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0 ? parsed : DEFAULT_CHEIKH_VIDEOS;
+    if (!Array.isArray(parsed) || parsed.length === 0) {
+      saveCheikhVideos(DEFAULT_CHEIKH_VIDEOS);
+      return DEFAULT_CHEIKH_VIDEOS;
+    }
+    // Filter out any dummy Rickroll / placeholder links
+    const cleaned = parsed.filter(
+      (v: CheikhVideoLecture) =>
+        v.videoUrl &&
+        !v.videoUrl.includes('dQw4w9WgXcQ') &&
+        (v.videoUrl.endsWith('.mp4') || v.videoUrl.startsWith('/assets/'))
+    );
+    if (cleaned.length === 0) {
+      saveCheikhVideos(DEFAULT_CHEIKH_VIDEOS);
+      return DEFAULT_CHEIKH_VIDEOS;
+    }
+    return cleaned;
   } catch {
     return DEFAULT_CHEIKH_VIDEOS;
   }
